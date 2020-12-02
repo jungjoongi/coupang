@@ -5,7 +5,6 @@
 ````
 /coupang/json/{name}/{code}.json
 ````
-`
 |코드|명칭|찬미|준기|
 |--------|-------|-----|-----|
 |1001|여성패션|[바로가기](https://jungjoongi.com/coupang/json/chanmi/1001.json) | [바로가기](https://jungjoongi.com/coupang/json/joongi/1001.json)
