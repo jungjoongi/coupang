@@ -36,19 +36,53 @@
         left: 0;
         background-image: url("rocket_logo.png");
     }
+    .item:hover>.item-mask {
+        position: absolute;
+        width: 97%;
+        height: 100%;
+        background: #ffffff36;
+        z-index: 100;
+        left: 0;
+        top: 0;
+    }
+    .item:hover>.item-btn-wrap {
+        display: block;
+    }
+    .item-btn-wrap {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 110;
+        /*display: none;*/
+    }
+    .item-btn-wrap button {
+        background-color: #ffe3897d;
+        border: none;
+        margin-top:5%;
+        margin-bottom: 5%;
+        padding: 4px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    
+    
+    
+    
 
 </style>
 <body>
 
     <h1 class="title"></h1>
 
-    <div class="content">
+    <div class="content"></div>
 
-    </div>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     var json = {
         data : null,
+        requestUrl : "",
         getData : function() {
             $.getJSON("https://jungjoongi.com/coupang/json/chanmi/1001.json", function(data) {
                 json.data = data.data;
@@ -58,9 +92,16 @@
                 $(".content> div").each(function(i, item) {
                     UI.makeImage(item);
                     UI.rocketSetting(item);
+                    UI.makeMask(item);
+                    UI.makeBtn(item);
                 });
                 UI.makeTitle();
             })
+        } , makeRequestUrl : function() {
+            var path = location.pathname;
+            path = path.replace("view", "json");
+            path = path.substr(0, path.length-1) + ".json";
+            json.requestUrl = path;
         }
     }
 
@@ -90,14 +131,45 @@
         },
         makeTitle : function() {
             $(".title").html(json.data[0].categoryName);
+        },
+        makeMask : function(item) {
+            $(item).append("<div class='item-mask'></div>");
+        },
+        makeBtn : function(item) {
+            $(item).append("<div class='item-btn-wrap'>" 
+                        + "<button>URL복사</button>"
+                        + "<button>이미지 다운</button>"
+                        + "<button>방문</button>"
+                        + "</div>");
+        },
+        makeAlert : function(type) {
+
+            msg = "";
+            if(type = 1) {
+                msg = "URL 복사가 완료되었습니다.";
+            } else if (type = 2) {
+                msg = "이미지 다운로드중";
+            } else if (type = 3) {
+                msg = "페이지를 방문합니다."
+            } else {
+                return false;
+            }
+
         }
     }
     $(document).ready(function() {
+        json.makeRequestUrl();
         json.getData();
     })
     
     
     
+
+function requestUrl() {
+
+}
+
+
 </script>
 </body>
 </html>
