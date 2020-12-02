@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title class="title"></title>
+</head>
+<style>
+
+    .title {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .content {
+        max-width: 1200px;
+        margin: auto;
+    }
+    .item {
+        position: relative;
+        display: inline-block;
+        width: 30%;
+        padding: 1.5%;
+    }
+    .item-image {
+        width: 100%;
+    }
+    .item-name {
+        width: 100%;
+        font-weight: bold;
+        font-size: 1vw;
+        text-align: center;
+        display: block;
+    }
+    .rocket {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-image: url("rocket_logo.png");
+    }
+
+</style>
+<body>
+
+    <h1 class="title"></h1>
+
+    <div class="content">
+
+    </div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    var json = {
+        data : null,
+        getData : function() {
+            $.getJSON("https://jungjoongi.com/json/coupang/chanmi/1001.json", function(data) {
+                json.data = data.data;
+                
+            }).done(function() {
+                UI.build();
+                $(".content> div").each(function(i, item) {
+                    UI.makeImage(item);
+                    UI.rocketSetting(item);
+                });
+                UI.makeTitle();
+            })
+        }
+    }
+
+    var UI = {
+        build : function() {
+            var data = json.data;
+            var html = "";
+            for(key in data) {
+                var item = data[key];
+                html += "<div id='"+item.productId+"' class='item' data-is-rocket="+item.isRocket+" ";
+                html += "data-keyword="+item.keyword+" data-product-image="+item.productImage+" ";
+                html += "data-product-price="+item.productPrice+" ";
+                html += "data-product-url="+item.productUrl+" data-rank="+item.rank+">";
+                html += "<img class='item-image' src=''/>";
+                html += "<span class='item-name'>"+item.productName+"</span>";
+                html += "</div>";
+            }
+            $(".content").html(html);
+        },
+        makeImage : function(item) {
+            $(item).find("img").attr("src", $(item).data("productImage"))
+        },
+        rocketSetting : function (item) {
+            if($(item).data("isRocket") == true) {
+                $(item).append("<span class='rocket'>　　</span>")
+            }
+        },
+        makeTitle : function() {
+            $(".title").html(json.data[0].categoryName);
+        }
+    }
+    $(document).ready(function() {
+        json.getData();
+    })
+    
+    
+    
+</script>
+</body>
+</html>
