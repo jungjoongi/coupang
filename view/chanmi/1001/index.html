@@ -36,18 +36,6 @@
         left: 0;
         background-image: url("rocket_logo.png");
     }
-    .item:hover>.item-mask {
-        position: absolute;
-        width: 97%;
-        height: 100%;
-        background: #ffffff36;
-        z-index: 100;
-        left: 0;
-        top: 0;
-    }
-    .item:hover>.item-btn-wrap {
-        display: block;
-    }
     .item-btn-wrap {
         position: absolute;
         top: 50%;
@@ -60,13 +48,35 @@
     .item-btn-wrap button {
         background-color: #ffe3897d;
         border: none;
-        margin-top:5%;
+        margin: auto;
+        margin-top: 5%;
         margin-bottom: 5%;
         padding: 4px;
         font-weight: bold;
         cursor: pointer;
+        display: block;
+        text-align: center;
+        font-size: 2.2vw;
+    }
+
+    .hidden {
+        display:none;
     }
     
+    /* hover */
+    .item:hover>.item-mask {
+        position: absolute;
+        width: 97%;
+        height: 100%;
+        background: #ffffff36;
+        z-index: 100;
+        left: 0;
+        top: 0;
+    }
+    .item:hover>.item-btn-wrap {
+        display: block;
+    }
+
     
     
     
@@ -77,9 +87,22 @@
     <h1 class="title"></h1>
 
     <div class="content"></div>
+    
+    <input type="text" id="clipboard" class="hidden"/>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
+    var controller = {
+        init : function() {
+            json.makeRequestUrl();
+            json.getData();
+            this.addEvent();
+        },
+        addEvent : function() {
+            action.btnClick();
+        }
+    }
+
     var json = {
         data : null,
         requestUrl : "",
@@ -91,7 +114,7 @@
                 UI.build();
                 $(".content> div").each(function(i, item) {
                     UI.makeImage(item);
-                    UI.rocketSetting(item);
+                    UI.makeRocketLogo(item);
                     UI.makeMask(item);
                     UI.makeBtn(item);
                 });
@@ -113,7 +136,7 @@
                 var item = data[key];
                 html += "<div id='"+item.productId+"' class='item' data-is-rocket="+item.isRocket+" ";
                 html += "data-keyword="+item.keyword+" data-product-image="+item.productImage+" ";
-                html += "data-product-price="+item.productPrice+" ";
+                html += "data-product-price="+item.productPrice+" data-product-name="+item.productName+" ";
                 html += "data-product-url="+item.productUrl+" data-rank="+item.rank+">";
                 html += "<img class='item-image' src=''/>";
                 html += "<span class='item-name'>"+item.productName+"</span>";
@@ -124,22 +147,23 @@
         makeImage : function(item) {
             $(item).find("img").attr("src", $(item).data("productImage"))
         },
-        rocketSetting : function (item) {
+        makeRocketLogo : function (item) {
             if($(item).data("isRocket") == true) {
                 $(item).append("<span class='rocket'>　　</span>")
             }
         },
         makeTitle : function() {
-            $(".title").html(json.data[0].categoryName);
+            $(".title").html(json.data[0].categoryName + " BEST 100");
         },
         makeMask : function(item) {
             $(item).append("<div class='item-mask'></div>");
         },
         makeBtn : function(item) {
             $(item).append("<div class='item-btn-wrap'>" 
-                        + "<button>URL복사</button>"
-                        + "<button>이미지 다운</button>"
-                        + "<button>방문</button>"
+                        + "<button data-type='1'>URL복사</button>"
+                        + "<button data-type='2'>제목복사</button>"
+                        + "<button data-type='3'>이미지 다운</button>"
+                        + "<button data-type='4'>방문</button>"
                         + "</div>");
         },
         makeAlert : function(type) {
@@ -148,8 +172,10 @@
             if(type = 1) {
                 msg = "URL 복사가 완료되었습니다.";
             } else if (type = 2) {
-                msg = "이미지 다운로드중";
+                msg = "제목 복사가 완료되었습니다.";
             } else if (type = 3) {
+                msg = "이미지 다운로드중";
+            } else if (type = 4) {
                 msg = "페이지를 방문합니다."
             } else {
                 return false;
@@ -157,9 +183,38 @@
 
         }
     }
+
+    var action = {
+        btnClick : function() {
+            $(document).on('click', '.item-btn-wrap button', function(e) {
+                e.preventDefault();
+                var type = $(this).data("type");
+                var productUrl = $(this).parents(".item").data("productUrl");
+                var productImage = $(this).parents(".item").data("productImage");
+                var productName = $(this).parents(".item").data("productName");
+
+                if(type == 1) {
+                    $("#clipboard").val(productUrl);
+                } else if (type == 2) {
+                    $("#clipboard").val(productName);
+                } else if (type == 3) {
+                    $("#clipboard").val(productImage);
+                } else if (type == 4) {
+                    window.open(productUrl);
+                } else {
+                    return false;
+                }
+                $("#clipboard").removeClass("hidden");
+                $("#clipboard").select();
+                document.execCommand("copy");
+                $("#clipboard").addClass("hidden");
+                $("#clipboard").val("");
+                
+            });
+        }
+    }
     $(document).ready(function() {
-        json.makeRequestUrl();
-        json.getData();
+        controller.init();
     })
     
     
