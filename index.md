@@ -11,10 +11,11 @@
 id : <input type="text" id="name">
 
 
-## 카테고리별 인기상품 
-|코드|명칭|바로가기
+## 카테고리별 인기상품
+ 
+|코드|명칭|바로가기|
 |--------|-------|--------|
-|1001|여성패션| [asdsa]("https://naver.com") |
+|1001|여성패션| <a href="javascript:void(0);" class="categori_btn" data-code="1001">바로가기</a> |
 |1002|남성패션| <a href="javascript:void(0);" class="categori_btn" data-code="1002">바로가기</a> |
 |1003|베이비패션 (0~3세)| <a href="javascript:void(0);" class="categori_btn" data-code="1003">바로가기</a> |
 |1004|여아패션 (3세 이상)| <a href="javascript:void(0);" class="categori_btn" data-code="1004">바로가기</a> |
