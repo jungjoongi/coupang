@@ -4,7 +4,7 @@
 ### Quick Start
 ````
 1. id 등록 <등록 후 다음날 오전8시부터 사용가능>
-2. name : "본인닉네임" 입력  | exam) justin
+2. id : "본인ID" 입력  | exam) justin
 3. 바로가기 클릭
 ````
 #### id 입력
