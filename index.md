@@ -44,15 +44,5 @@ id : <input type="text" id="name">
 
 ## Made by [jungjoongi.com](https://jungjoongi.com)
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script>
-    $(".categori_btn").click(function(e) {
-        e.preventDefault();
-        var code = $(this).data("code");
-        var name = $("#name").val();
-        if(name == "") {
-            alert("id를 입력해주세요");
-        }
-        location.href = "/coupang/view/"+name+"/"+code;
-    });
-</script>
+<script src="/coupang/common/script/jquery.min.js"></script>
+<script src="/coupang/common/script/main.js"></script>
