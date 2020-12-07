@@ -12,7 +12,7 @@ id : <input type="text" id="name">
 
 
 ## 카테고리별 인기상품
- 
+
 |코드|명칭|바로가기|
 |--------|-------|--------|
 |1001|여성패션| <a href="javascript:void(0);" class="categori_btn" data-code="1001">바로가기</a> |
@@ -50,6 +50,9 @@ id : <input type="text" id="name">
         e.preventDefault();
         var code = $(this).data("code");
         var name = $("#name").val();
+        if(name == "") {
+            alert("id를 입력해주세요");
+        }
         location.href = "/coupang/view/"+name+"/"+code;
     });
 </script>
