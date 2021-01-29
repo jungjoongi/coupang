@@ -1,1 +1,1 @@
-{"rCode":"0","rMessage":"게시글 작성 시, \"파트너스 활동을 통해 일정액의 수수료를 제공받을 수 있음\"을 기재하셔야 합니다"}
+{"rCode":"400","rMessage":"category id is not active: 1006"}
