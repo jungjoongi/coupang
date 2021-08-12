@@ -1,1 +1,5 @@
-{"rCode":"400","rMessage":"category id is not active: 1004"}
+{
+  "code" : "ERROR",
+  "message" : "Invalid signature.",
+  "transactionId" : "a7798bc7-8c46-46e2-9d87-a9b05536fd51"
+}
